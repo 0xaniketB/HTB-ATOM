@@ -1,5 +1,7 @@
 # HackTheBox - Atom Machine Writeup
 
+![Cover Image](https://user-images.githubusercontent.com/87259078/125188001-2aff4700-e1e7-11eb-8d75-bcb7f46a49c5.jpg)
+
 ## [Enumeration](#enumeration-1)
 
 ## [Initial Access](#initial-access-1)
