@@ -1,10 +1,10 @@
 # Atom - (Electron-Builder Vuln)
 
-## [Enumeration](craftdocs://open?blockId=9F874679-96B3-4069-8E0E-8CD10CA8287E&spaceId=f2720b1c-ea2b-4053-35cc-fe42cb8a5e5e)
+## [Enumeration](#enumeration-1)
 
-## [Initial Access](craftdocs://open?blockId=E2A2F3D2-08A3-46CB-BD5F-1AFB63943106&spaceId=f2720b1c-ea2b-4053-35cc-fe42cb8a5e5e)
+## [Initial Access](#initial-access-1)
 
-## [Privilege Escalation](craftdocs://open?blockId=0806583F-66FD-4B35-80D4-7BEF6832E556&spaceId=f2720b1c-ea2b-4053-35cc-fe42cb8a5e5e)
+## [Privilege Escalation](#privilege-escalation-1)
 
 ----
 
