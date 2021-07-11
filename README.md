@@ -1,7 +1,7 @@
 # HackTheBox - Atom Machine Writeup
 # Atom - (Electron-Builder Vuln)
 
-## [Enumeration](#enumeration)
+## [Enumeration](#enumeration-1)
 
 ## [Initial Access](#initial-access)
 
