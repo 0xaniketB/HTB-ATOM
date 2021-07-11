@@ -14,13 +14,13 @@
 
 ## Skills Required
 
-- SMB Enumeration
-- Redis Enumeration
+* SMB Enumeration
+* Redis Enumeration
 
 ## Skills Learned
 
-- Electron-Builder Exploit via signature validation bypass
-- Portable Kanban Password Decryption
+* Electron-Builder Exploit via signature validation bypass
+* Portable Kanban Password Decryption
 
 # Enumeration
 
