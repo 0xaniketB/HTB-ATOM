@@ -1,5 +1,4 @@
 # HackTheBox - Atom Machine Writeup
-# Atom - (Electron-Builder Vuln)
 
 ## [Enumeration](#enumeration-1)
 
