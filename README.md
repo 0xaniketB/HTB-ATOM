@@ -3,9 +3,9 @@
 
 ## [Enumeration](#enumeration-1)
 
-## [Initial Access](#initial-access)
+## [Initial Access](#initial-access-1)
 
-## [Privilege Escalation](#privilege-escalation)
+## [Privilege Escalation](#privilege-escalation-1)
 
 ----
 
